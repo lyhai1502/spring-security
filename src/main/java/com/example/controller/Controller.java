@@ -44,8 +44,8 @@ public class Controller {
         return ResponseEntity.ok(service.checkPermission(authentication));
     }
 
-    @SecurityRequirement(name = "Bearer Authentication")
-    @PreAuthorize("hasAuthority('admin')")
+//    @SecurityRequirement(name = "Bearer Authentication")
+//    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("api/create-user")
     public ResponseEntity<?> createUser(@RequestBody LoginDTO loginDTO) {
         return ResponseEntity.ok(loginService.createUser(loginDTO));
