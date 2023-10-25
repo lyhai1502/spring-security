@@ -1,6 +1,15 @@
 - change username and password of your database (mysql) from resources/application-properties
+
 - make sure your database connected to source and create table "authentication"
-- comment 2 lines from "Controller" to create admin![CleanShot 2023-10-25 at 17.44.04@2x](/Users/vanlyhai/Library/Application Support/CleanShot/media/media_Kzxioimrtq/CleanShot 2023-10-25 at 17.44.04@2x.png)
+
+- comment 2 lines: 
+
+  ```
+  @SecurityRequirement(name = "Bearer Authentication")
+  @PreAuthorize("hasAuthority('admin')")
+  ```
+
+  from "Controller" to create admin
 
 - API: http://localhost:8085/api/create-user (POST) 
   Body: 
@@ -13,11 +22,9 @@
 
   }
 
-- After create admin, re-comment 2 lines from "Controller", add row 
+- After create admin, re-comment 2 lines from "Controller", add 2 row (admin and user) to "app_role" table;
 
-  ![CleanShot 2023-10-25 at 17.56.42@2x](/Users/vanlyhai/Library/Application Support/CleanShot/media/media_Hwf0xV41fa/CleanShot 2023-10-25 at 17.56.42@2x.png) to "app_role" table and add row
-
-  ![CleanShot 2023-10-25 at 17.57.20@2x](/Users/vanlyhai/Library/Application Support/CleanShot/media/media_f7opWFw6EV/CleanShot 2023-10-25 at 17.57.20@2x.png) to "user_role" table (user_id is id of admin in "app_user" table)
+  and add row (1,1,1) to "user_role" table (role_id is id of ADMIN in "app_role" table, user_id is id of ADMIN in "app_user" table)
 
 - You can login admin to take token and create user from admin token
 
