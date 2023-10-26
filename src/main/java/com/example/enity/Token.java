@@ -3,26 +3,30 @@ package com.example.enity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "Token")
+@Table(name = "token")
 public class Token {
     @Id
     @GeneratedValue
-    @Column(name = "Token_Id", nullable = false)
+    @Column(name = "token_id", nullable = false)
     private long id;
 
-    @Column(name = "Token", nullable = false)
+    @Column(name = "token", nullable = false)
     private String token;
 
-    @Column(name = "Expired", nullable = false)
+    @Column(name = "expired", nullable = false)
     private boolean expired;
 
-    @Column(name = "Revoked", nullable = false)
-    private boolean revoked;
+    @Column(name = "date_expired")
+    private Date date_expired;
 
-    @ManyToOne
-    @JoinColumn(name="User_Id")
-        private AppUser appUser;
+    @Column(name = "revoked", nullable = false)
+    private boolean revoked = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 }

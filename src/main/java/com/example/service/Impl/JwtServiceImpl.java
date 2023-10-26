@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    @Value("${r2s.jwtSecret}")
+    @Value("${jwtSecret}")
     private String jwtSecret;
-    @Value("${r2s.jwtExpirationMs}")
+    @Value("${jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String extractUsername(String token) {
@@ -64,7 +64,7 @@ public class JwtServiceImpl implements JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    public Date     extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 

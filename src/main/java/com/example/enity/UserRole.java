@@ -5,25 +5,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "User_Role", uniqueConstraints = {
-                @UniqueConstraint(name = "USER_ROLE_UK", columnNames = { "User_Id", "Role_Id" }) })
+@Table(name = "user_role", uniqueConstraints = {
+                @UniqueConstraint(name = "USER_ROLE_UK", columnNames = { "user_id", "role_id" }) })
 public class UserRole {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "User_Id", nullable = false)
-    private AppUser appUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "Role_Id", nullable = false)
-    private AppRole appRole;
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     @Override
     public String toString() {
-        return appRole.getRoleName();
+        return role.getRoleName();
     }
 }

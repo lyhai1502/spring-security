@@ -1,10 +1,8 @@
 package com.example.controller;
 
-import com.example.dto.JwtResponseDTO;
-import com.example.dto.LoginDTO;
+import com.example.dto.RequestAuthenticationDTO;
 import com.example.service.DemoService;
-import com.example.service.JwtService;
-import com.example.service.LoginService;
+import com.example.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Controller {
+public class UserController {
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
     @Autowired
     private DemoService service;
-
-    @PostMapping("api/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
-        return ResponseEntity.ok(loginService.loginUser(loginDTO));
-    }
 
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/user")
@@ -45,9 +38,15 @@ public class Controller {
     }
 
     @SecurityRequirement(name = "Bearer Authentication")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('Role_Admin')")
     @PostMapping("api/create-user")
-    public ResponseEntity<?> createUser(@RequestBody LoginDTO loginDTO) {
-        return ResponseEntity.ok(loginService.createUser(loginDTO));
+    public ResponseEntity<?> createUser(@RequestBody RequestAuthenticationDTO requestAuthenticationDTO) {
+        return ResponseEntity.ok(userService.createUser(requestAuthenticationDTO));
+    }
+
+
+    @PostMapping("api/login")
+    public ResponseEntity<?> loginUser(@RequestBody RequestAuthenticationDTO requestAuthenticationDTO) {
+        return ResponseEntity.ok(userService.loginUser(requestAuthenticationDTO));
     }
 }

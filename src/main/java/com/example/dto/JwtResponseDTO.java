@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 @Data
 public class JwtResponseDTO implements Serializable {
-    private String token;
     private String type = "Bearer";
-    private String username;
-    private String role;
-    public JwtResponseDTO(String accessToken, String username, String roles) {
+    private String token;
+    private String userName;
+    private String roleName;
+    public JwtResponseDTO(String accessToken, String userName, String roleName) {
         this.token = accessToken;
-        this.username = username;
-        this.role = roles;
+        this.userName = userName;
+        this.roleName = roleName;
     }
 }
