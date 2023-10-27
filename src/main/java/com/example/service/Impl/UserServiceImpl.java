@@ -4,18 +4,15 @@ import com.example.common.ERole;
 import com.example.dto.JwtResponseDTO;
 import com.example.dto.RequestAuthenticationDTO;
 import com.example.enity.Role;
-import com.example.enity.Token;
 import com.example.enity.User;
 import com.example.enity.UserRole;
 import com.example.repository.RoleRepository;
-import com.example.repository.TokenRepository;
 import com.example.repository.UserRepository;
 import com.example.repository.UserRoleRepository;
 import com.example.service.JwtService;
 import com.example.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,8 +38,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleRepository userRoleRepository;
     @Autowired
-    private TokenRepository tokenRepository;
-    @Autowired
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -62,14 +57,6 @@ public class UserServiceImpl implements UserService {
         List<UserRole> userRoles = userRoleRepository.findByUser(user);
 
         String jwt = jwtService.generateToken(userDetails);
-
-        Token token = new Token();
-        token.setToken(jwt);
-        token.setExpired(jwtService.isTokenExpired(jwt));
-        token.setDate_expired(jwtService.extractExpiration(jwt));
-        token.setUser(user);
-        Object o = jwtService.extractRole(jwt);
-        tokenRepository.save(token);
 
         return new JwtResponseDTO(jwt, requestAuthenticationDTO.getEmail(), userRoles.get(0).toString());
     }
