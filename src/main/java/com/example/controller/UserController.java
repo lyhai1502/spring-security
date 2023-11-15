@@ -9,10 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class UserController {
     @Autowired
@@ -21,7 +20,7 @@ public class UserController {
     private DemoService service;
 
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping("/user")
+    @GetMapping("/user")
     public ResponseEntity<?> demoUser()
     {
 
@@ -30,7 +29,7 @@ public class UserController {
     }
 
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping("/admin")
+    @GetMapping("/admin")
     public ResponseEntity<?> demoAdmin()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
